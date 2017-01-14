@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+
+public class editfile {
+	
+	
+	public static void main(String args[]) throws IOException{
+		// Open the file
+		FileInputStream fstream = new FileInputStream("C:\\Users\\Vivek\\Desktop\\novels\\Anthropocentric.txt");
+		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+	
+		String strLine;
+String s=null;
+int temp=0;
+		//Read File Line By Line
+		while ((strLine = br.readLine()) != null)   {
+		  
+			String pattern = "^[0-9]+[\\s]*$";
+			//strLine=strLine.replaceAll(pattern, " ");
+			if(strLine.matches(pattern)||(strLine.matches(" ")&&temp==1)){
+				temp=1;
+				continue;
+				
+			}else{
+				writeResult("C:\\Users\\Vivek\\Desktop\\novels\\la.txt",strLine);
+			   temp=0;
+			}
+		}
+	
+
+		//Close the input stream
+		br.close();
+		
+	}
+
+	public static void writeResult(String writeFileName, String text)
+    {
+		  File log = new File(writeFileName);
+		    try{
+		    if(log.exists()==false){
+		            System.out.println("We had to make a new file.");
+		            log.createNewFile();
+		    }
+		    PrintWriter out = new PrintWriter(new FileWriter(log, true));
+		    out.append(text );
+		    out.println();
+		    out.close();
+		    }catch(IOException e){
+		        System.out.println("COULD NOT LOG!!");
+		    }
+    }
+	}
